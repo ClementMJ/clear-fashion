@@ -4,8 +4,8 @@ const fs = require('fs');
 
 const MONGODB_DB_NAME = 'clearfashion';
 const MONGODB_COLLECTION = 'products';
-const MONGODB_URI = process.env.MONGODB_URI;
-
+const MONGODB_URI = "mongodb+srv://admin:admin@cluster0.6yihw.mongodb.net/projet?retryWrites=true&w=majority";
+//vercel secrets add my-mongodb-uri mongodb+srv://admin:admin@my-cluster-uf345.mongodb.net/projet?retryWrites=true
 let client = null;
 let database = null;
 
