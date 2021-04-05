@@ -4,13 +4,13 @@ const fs = require('fs');
 
 const MONGODB_DB_NAME = 'clearfashion';
 const MONGODB_COLLECTION = 'products';
-const MONGODB_URI = "mongodb+srv://admin:admin@cluster0.6yihw.mongodb.net/projet?retryWrites=true&w=majority";
-//vercel secrets add my-mongodb-uri mongodb+srv://admin:admin@my-cluster-uf345.mongodb.net/projet?retryWrites=true
+const MONGODB_URI = process.env.MONGODB_URI;
+
 let client = null;
 let database = null;
 
 /**
- * Get db connection
+ * connecting to mongo database
  * @type {MongoClient}
  */
 const getDB = module.exports.getDB = async () => {
@@ -33,16 +33,15 @@ const getDB = module.exports.getDB = async () => {
 };
 
 /**
- * Insert list of products
+ * Insert list of products in our databse
  * @param  {Array}  products
  * @return {Object}
  */
+
 module.exports.insert = async products => {
   try {
     const db = await getDB();
     const collection = db.collection(MONGODB_COLLECTION);
-    // More details
-    // https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/#insert-several-document-specifying-an-id-field
     const result = await collection.insertMany(products, {'ordered': false});
 
     return result;
@@ -60,6 +59,8 @@ module.exports.insert = async products => {
  * @param  {Array}  query
  * @return {Array}
  */
+
+
 module.exports.find = async query => {
   try {
     const db = await getDB();
@@ -73,9 +74,6 @@ module.exports.find = async query => {
   }
 };
 
-/**
- * Close the connection
- */
 module.exports.close = async () => {
   try {
     await client.close();
